@@ -4,9 +4,12 @@
 package comp1721.cwk1;
 
 import java.io.IOException;
+import java.util.Random;
 
 
 public class Wordle {
+  public static Random word;
+  public static String chosenWord;
   public static void main(String[] args) throws IOException {
     Game game;
 
