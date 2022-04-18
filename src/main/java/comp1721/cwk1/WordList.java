@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class WordList {
 
     public static String target;
-    List<String> wl = new ArrayList<>();
+    List<String> words = new ArrayList<>();
 
   // TODO: Implement constructor with a String parameter
   public WordList(String fileName) throws IOException {
@@ -21,28 +21,18 @@ public class WordList {
       BufferedReader bR = new BufferedReader(new FileReader(file));
       String word;
       while((word = bR.readLine())!= null){
-          this.wl.add(word);
+          this.words.add(word);
       }
   }
   // TODO: Implement size() method, returning an int
-    public int size() throws IOException {
-        int size = 0;
-        String dir = "data\\words.txt";
-        File fp = new File(dir);
-        if(!fp.exists()){
-            System.out.println("There is not a word file.");
-            fp.createNewFile();
-        }
-        //BufferedWriter bw = new BufferedWriter(new FileWriter(file));
-        BufferedReader br = new BufferedReader(new FileReader(fp));
-        String line;
-        while ((line = br.readLine())!=null){
-            size ++;
-        }
-        return size;
-    }
+    public int size() throws IOException {return words.size();}
   // TODO: Implement getWord() with an int parameter, returning a String
-  public String getWord(int n){
+  public String getWord(int n) throws IOException {
+      if(n < 0 || n > this.size()-1){
+          throw new GameException("Invalid game number.");
+      }else {
+          target = words.get(n);
+      }
       return target;
   }
 }
