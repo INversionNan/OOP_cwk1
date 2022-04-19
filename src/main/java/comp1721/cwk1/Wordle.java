@@ -35,7 +35,7 @@ public class Wordle {
       game = new Game("data/words.txt");
     }
 
-    WordList wl = new WordList("data/words.txt");
+    //WordList wl = new WordList("data/words.txt");
     game.play();
     game.save("build/lastgame.txt");
   }

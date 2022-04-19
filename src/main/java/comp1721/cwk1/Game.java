@@ -21,7 +21,7 @@ public class Game {
       wordList = new WordList(fileName);
       LocalDate now = LocalDate.now();
       LocalDate time = LocalDate.of(2021,6,19);
-      int days = Math.toIntExact(time.toEpochDay()-now.toEpochDay());
+      int days = Math.toIntExact(now.toEpochDay()-time.toEpochDay());
       this.gameNumber = days;
   //        System.out.println(days);
       if(this.gameNumber < this.wordList.size()) {
@@ -46,9 +46,9 @@ public class Game {
   }
   // TODO: Implement play() method
   public void play(){
-      boolean isplay = true;
+      boolean isplay = false;
       guess = new Guess(6);
-      System.out.println("WORDLE"+this.gameNumber);
+      System.out.println("WORDLE "+this.gameNumber);
 //        for(int i = 1; i < 7;i++){
 //            System.out.printf("Enter guess (%d/6)", i);
 //            chosenWord = getChosenWord();
@@ -58,7 +58,7 @@ public class Game {
 //                break;
 //            }
 //        }
-      while (isplay){
+      while (!isplay){
           guess.readFromPlayer();
           if(!this.isAccessible){
               String str = guess.compareWith(this.target)+"\n";
@@ -69,14 +69,17 @@ public class Game {
               String str = guess.compareWithInAccess(this.target)+"\n";
               res += str;
               System.out.print(str);
+              if(str.equals("You won!\n"))break;
           }
       }
   }
   // TODO: Implement save() method, with a String parameter
   public void save(String fileName) throws IOException {
       File file = new File(fileName);
+      if(file.exists())file.delete();
       RandomAccessFile src = new RandomAccessFile(file,"rw");
       src.writeChars(res.substring(0,res.length()-2));
+      src.close();
   }
 
     public static void main(String[] args) throws IOException {

@@ -1,10 +1,7 @@
 package comp1721.cwk1;
 
 import java.text.Normalizer;
-import java.util.List;
-import java.util.Locale;
-import java.util.Objects;
-import java.util.Scanner;
+import java.util.*;
 import java.util.regex.Pattern;
 
 
@@ -28,11 +25,17 @@ public class Guess {
     if(num < 1 || num > 6){
       throw new GameException("This number has wrong range.GuessNumber is in the allowed range of 1–6.");
     }
-    if(!Pattern.compile("(?i)[A-Z]]").matcher(chosenWord.toUpperCase()).find()){
-      throw new GameException("This chosen does not have all letters.");
-    }
+//    if(!Pattern.compile("(?i)[A-Z]]").matcher(chosenWord.toUpperCase()).find()){
+//      throw new GameException("This chosen does not have all letters.");
+//    }
     if(chosenWord.length() != 5) {
       throw new GameException("word consists of 5 alphabetic characters.");
+    }
+    for(char c: chosenWord.toCharArray()){
+      int cinAscii = c-0;
+      if (cinAscii<65||cinAscii>90&&cinAscii<97||cinAscii>122) {
+        throw new GameException("word consists of 5 alphabetic characters.");
+      }
     }
     this.guessNumber = num;
     this.chosenword = chosenWord.toUpperCase();
@@ -104,11 +107,17 @@ public class Guess {
 //    }
 //    return t;
     StringBuffer sb = new StringBuffer();
+    Set<Character> set = new HashSet<>();
     for(int i = 0; i < this.chosenword.length() && i < target.length(); i++){
       if(target.charAt(i) == this.chosenword.charAt(i)){
         sb.append("\033[30;102m " + this.chosenword.charAt(i) + " \033[0m");
       }else if(target.indexOf(this.chosenword.charAt(i)) != -1){
-        sb.append("\033[30;103m " + this.chosenword.charAt(i) + " \033[0m");
+        if(!set.contains(this.chosenword.charAt(i))){
+          set.add(this.chosenword.charAt(i));
+          sb.append("\033[30;103m " + this.chosenword.charAt(i) + " \033[0m");
+        }else {
+          sb.append("\033[30;107m " + this.chosenword.charAt(i) + " \033[0m");
+        }
       }else {
         sb.append("\033[30;107m " + this.chosenword.charAt(i) + " \033[0m");
       }
@@ -164,24 +173,24 @@ public class Guess {
       switch (this.count-1){
         case 1:
           System.out.println("Superb - Got it in one!");
-          return false;
+          return true;
         case 2: case 3: case 4: case 5:
           System.out.println("Well done!");
-          return false;
+          return true;
         case 6:
           System.out.println("That was a close call!");
-          return false;
+          return true;
         default:
-          return false;
+          return true;
       }
     }else {
       if(this.count > 6){
         System.out.println("Nope - Better luck next time!");
         System.out.println(target);
-        return false;
+        return true;
       }
     }
-    return true;
+    return false;
   }
   public boolean matchesInAccess(String target){
     return false;

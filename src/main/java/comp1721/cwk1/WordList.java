@@ -14,14 +14,18 @@ public class WordList {
   // TODO: Implement constructor with a String parameter
   public WordList(String fileName) throws IOException {
       File file = new File(fileName);
-      if(!file.exists()){
-          System.out.println("There is not a word file.");
-          file.createNewFile();
-      }
-      BufferedReader bR = new BufferedReader(new FileReader(file));
-      String word;
-      while((word = bR.readLine())!= null){
-          this.words.add(word);
+//      if(!file.exists()){
+//          System.out.println("There is not a word file.");
+//          file.createNewFile();
+//      }
+//      BufferedReader bR = new BufferedReader(new FileReader(file));
+//      String word;
+//      while((word = bR.readLine())!= null){
+//          this.words.add(word);
+      RandomAccessFile src = new RandomAccessFile(file,"r");
+      String line;
+      while((line=(src.readLine())) != null) {
+          words.add(line);
       }
   }
   // TODO: Implement size() method, returning an int
