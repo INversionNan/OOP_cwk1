@@ -84,6 +84,18 @@ task runFixed(type: JavaExec) {
     println "----------------------------------------------------------------"
   }
 }
+task runa(type: JavaExec) {
+  group 'application'
+  description 'Runs the game specified as a command line argument.'
+  standardInput = System.in
+  classpath = sourceSets.main.runtimeClasspath
+  mainClass = 'comp1721.cwk1.Wordle'
+  args '-a'
+  args '100'
+  doFirst {
+    println "----------------------------------------------------------------"
+  }
+}
 
 // Generation of Zip file for submission
 

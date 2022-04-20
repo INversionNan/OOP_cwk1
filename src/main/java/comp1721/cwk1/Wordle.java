@@ -28,7 +28,8 @@ public class Wordle {
     }
     else if (args.length > 1) {
       //TODO generate game object with two argument
-      game = new Game(Integer.parseInt(args[1]), "data/words.txt",true);
+      //game = new Game(Integer.parseInt(args[1]), "data/words.txt",true);
+      game = new Game("-a",Integer.parseInt(args[1]),"data/words.txt");
     }
     else {
       // Play today's game
@@ -38,5 +39,6 @@ public class Wordle {
     //WordList wl = new WordList("data/words.txt");
     game.play();
     game.save("build/lastgame.txt");
+    game.save_history("build/history.txt");
   }
 }

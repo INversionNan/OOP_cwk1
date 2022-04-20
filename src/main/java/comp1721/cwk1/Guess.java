@@ -18,6 +18,7 @@ public class Guess {
       if(num < 1 || num > 6){
         throw new GameException("This number has wrong range.GuessNumber is in the allowed range of 1–6.");
       }
+
       this.guessNumber = num;
   }
   // TODO: Implement constructor with int and String parameters
@@ -80,6 +81,9 @@ public class Guess {
   public void readFromPlayer(){
     System.out.print("Enter guess ("+this.count+"/"+this.guessNumber+"): ");
     this.chosenword = INPUT.nextLine().toUpperCase();
+    if(this.chosenword.length()!= 5){
+      throw new GameException("word consists of 5 alphabetic characters.");
+    }
     this.count++;
   }
 
@@ -187,13 +191,13 @@ public class Guess {
       if(this.count > 6){
         System.out.println("Nope - Better luck next time!");
         System.out.println(target);
-        return true;
+        return false;
       }
     }
     return false;
   }
   public boolean matchesInAccess(String target){
-    return false;
+    return target.equals(this.chosenword);
   }
   public static void main(String[] args) {
     Guess g = new Guess(1,"CAUSE");
